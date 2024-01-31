@@ -1,5 +1,6 @@
 from typing import Union
 import uvicorn
+import service
 
 
 from fastapi import FastAPI
@@ -11,6 +12,7 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/projetos/{username}")
+async def read_item(username: str):
+    projects = await service.get_projects_user(username)
+    return {"item_id": projects}
